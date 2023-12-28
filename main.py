@@ -90,7 +90,7 @@ def register():
         if user:
             flash("You've already signed up with that email, log in instead!")
             return redirect(url_for("login"))
-        password = generate_password_hash(form.password.data, method="pbkdf2")
+        password = generate_password_hash(form.password.data, method="pbkdf2:sha256")
         new_user = User(email=form.email.data, password=password, name=form.name.data)
         db.session.add(new_user)
         db.session.commit()
