@@ -143,6 +143,7 @@ def show_post(post_id):
         else:
             flash("You need to login or register to comment.")
             return redirect(url_for("login"))
+        return redirect(url_for("show_post"))
     return render_template("post.html", post=requested_post, form=form, comments=all_comments, gravatar=gravatar)
 
 

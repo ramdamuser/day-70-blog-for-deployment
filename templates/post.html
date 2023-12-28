@@ -11,7 +11,11 @@
           <h2 class="subheading">{{ post.subtitle }}</h2>
           <span class="meta"
             >Posted by
+            {% if current_user.id == 1 %}
+            <a href="#">{{ post.author.name }}(admin)</a>
+            {% else %}
             <a href="#">{{ post.author.name }}</a>
+            {% endif %}
             on {{ post.date }}
           </span>
         </div>
