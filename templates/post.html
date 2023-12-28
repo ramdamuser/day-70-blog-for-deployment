@@ -39,23 +39,21 @@
 
         <!-- Comments Area -->
         <!-- TODO: Add a CKEditor for commenting below -->
-       {% if current_user.is_authenticated: %}
         {{ render_form(form, novalidate=True) }}
-        {% else %}
-        <strong><a href={{ url_for("register") }}>Register for free</a> to join this conversation. Already have an account? <a href="url_for(login)">Log in to comment</a></strong>
-        {% endif %}
         <div class="comment">
           <!-- TODO: Show all the comments on a post -->
           <ul class="commentList">
+            {% for comment in comments %}
             <li>
               <div class="commenterImage">
-                <img src="../static/assets/img/default-profile.jpg" />
+                <img src={{ comment.author.email | gravatar }} />
               </div>
               <div class="commentText">
-                <p>Some comment</p>
-                <span class="date sub-text">comment author name</span>
+                <p>{{ comment.text }}</p>
+                <span class="date sub-text">{{ comment.author.name }}</span>
               </div>
             </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
