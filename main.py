@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.Text(255))
+    password = db.Column(db.String(255))
     name = db.Column(db.String(100))
     posts = relationship("BlogPost", back_populates="author")
     comments = relationship("Comment", back_populates="author")
@@ -90,7 +90,7 @@ def register():
         if user:
             flash("You've already signed up with that email, log in instead!")
             return redirect(url_for("login"))
-        password = generate_password_hash(form.password.data, method="pbkdf2:sha256")
+        password = generate_password_hash(form.password.data, method="pbkdf2:sha256", salt_length=8)
         new_user = User(email=form.email.data, password=password, name=form.name.data)
         db.session.add(new_user)
         db.session.commit()
