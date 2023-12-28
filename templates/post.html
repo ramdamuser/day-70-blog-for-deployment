@@ -49,11 +49,15 @@
                 <img src={{ comment.author.email | gravatar }} />
               </div>
               <div class="commentText">
-                <p>{{ comment.text }}</p>
-                {% if comment.author.id == 1 %}
-                <span class="date sub-text">{{ comment.author.name }}(admin)</span>
-                {% else %}
-                <span class="date sub-text">{{ comment.author.name }}</span>
+                <p>{{ comment.text }} 
+                  {% if current_user.id == 1 %}
+                    <a href={{ url_for("delete_comment", comment_id=comment.id, post_id=post.id) }}>✘</a>
+                  {% endif %}
+                </p>
+                <span class="date sub-text">{{ comment.author.name }}
+                  {% if comment.author.id == 1 %}
+                  (admin)
+                </span>
                 {% endif %}
               </div>
             </li>
