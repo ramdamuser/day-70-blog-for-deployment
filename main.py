@@ -12,7 +12,7 @@ from functools import wraps
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -210,4 +210,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=False)
