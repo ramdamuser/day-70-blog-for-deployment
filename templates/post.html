@@ -57,8 +57,8 @@
                 <span class="date sub-text">{{ comment.author.name }}
                   {% if comment.author.id == 1 %}
                   (admin)
+                  {% endif %}
                 </span>
-                {% endif %}
               </div>
             </li>
             {% endfor %}

@@ -207,7 +207,7 @@ def delete_comment(comment_id, post_id):
     comment_to_delete = comments[comment_id]
     db.session.delete(comment_to_delete)
     db.session.commit()
-    return redirect(url_for("post", post_id=post_id))
+    return redirect(url_for("show_post", post_id=post_id))
 
 
 @app.route("/about")
