@@ -37,6 +37,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(100))
     posts = relationship("BlogPost", back_populates="author")
     comments = relationship("Comment", back_populates="author")
+    is_co_admin = db.Column(db.Boolean)
 
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
@@ -76,7 +77,7 @@ gravatar = Gravatar(app,
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if current_user.id != 1:
+        if current_user.id != 1 or not current_user.is_co_admin:
             return abort(403)
         return f(*args, **kwargs)
     return decorated_function            
@@ -221,6 +222,14 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+@app.route("/promote/<int:user_id>/<int:post_id>")
+@admin_only
+def promote(user_id, post_id):
+    user_to_promote = db.get_or_404(User, user_id)
+    user_to_promote.is_co_admin = True
+    db.session.commit()
+    return redirect(url_for("show_post", post_id=post_id))
 
 
 if __name__ == "__main__":
